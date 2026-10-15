@@ -2,19 +2,16 @@
 
 ## GitHub Codespaces
 
-New Codespaces set up a project virtual environment in `.venv` and install the
-packages listed in `requirements.txt`. VS Code uses that environment for Python
-and notebooks. The virtual environment is intentionally not committed; the
-requirements file lets a newly created Codespace recreate it.
+New Codespaces install Pipenv and sync the dependencies from `Pipfile.lock`
+into a project virtual environment in `.venv`. VS Code uses that environment
+for Python and notebooks. The virtual environment is intentionally not
+committed; `Pipfile` and `Pipfile.lock` let a newly created Codespace recreate
+it. `requirements.txt` is no longer used by Codespaces.
 
-Installing a package does not update `requirements.txt` automatically. After
-each new install, refresh the file so the package and its installed
-dependencies are available in future Codespaces:
+To add a package and record it for future Codespaces, run:
 
 ```bash
-.venv/bin/python -m pip install package-name
-.venv/bin/python -m pip freeze > requirements.txt
+PIPENV_VENV_IN_PROJECT=1 python -m pipenv install package-name
 ```
 
-Replace `package-name` with the package's pip name. Commit the updated
-`requirements.txt` along with your code.
+Commit the updated `Pipfile` and `Pipfile.lock` along with your code.
